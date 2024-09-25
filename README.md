@@ -88,7 +88,7 @@ set MCNP_ROOT_620 "/path/to/your/MCNP/MCNP620"
 # set MCNP_ROOT_630 "/path/to/your/MCNP/MCNP630"
 
 # SCALE Root Paths
-set SCALE_ROOT_632 "/path/to/your/SCALE/scale6.3.2-mpi"
+set SCALE_ROOT_632 "/path/to/your/SCALE/SCALE-632"
 set SCALE_ROOT_631 "/path/to/your/SCALE/SCALE-631"
 set SCALE_ROOT_624 "/path/to/your/SCALE/SCALE-624"
 ```
