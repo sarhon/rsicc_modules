@@ -78,6 +78,10 @@ source ~/.bashrc
 
 Create a configuration file `~/.rsicc_roots.conf` to specify the installation directories for MCNP and SCALE.
 
+```bash
+nano ~/.rsicc_roots.conf
+```
+
 #### Template `~/.rsicc_roots.conf`
 
 ```tcl
