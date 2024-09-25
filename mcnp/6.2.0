@@ -1,0 +1,50 @@
+#%Module1.0
+##
+## MCNP 6.2.0 Modulefile
+##
+
+proc ModulesHelp { } {
+    puts stderr "This module sets up the environment for MCNP 6.2.0"
+    puts stderr "Ensure MCNP_ROOT_620 is set in ~/.rsicc_roots.conf."
+}
+
+module-whatis "Sets up environment for MCNP 6.2"
+
+# Load user's configuration file
+set config_file "~/.rsicc_roots.conf"
+set config_file_expanded [file normalize $config_file]
+if { [file exists $config_file_expanded] } {
+    source $config_file_expanded
+} else {
+    puts stderr "Configuration file $config_file not found. Please create it with your MCNP_ROOT roots."
+    break
+}
+
+# Get MCNP_ROOT for this version
+if { [info exists MCNP_ROOT_620] } {
+    set MCNP_ROOT [file normalize $MCNP_ROOT_620]
+} else {
+    puts stderr "MCNP_ROOT_620 is not set in $config_file. Please set it to the MCNP 6.2 installation directory."
+    break
+}
+
+# Check if MCNP_ROOT exists
+if { ! [file isdirectory $MCNP_ROOT] } {
+    puts stderr "Error: MCNP_ROOT ($MCNP_ROOT) does not exist."
+    break
+}
+
+# Set paths based on MCNP_ROOT
+set MCNP_BIN "$MCNP_ROOT/MCNP_CODE/bin"
+set MCNP_DATA "$MCNP_ROOT/MCNP_DATA"
+set ISCDATA "$MCNP_ROOT/MCNP_CODE/MCNP620/Utilities/ISC/data"
+
+# Prepend MCNP binary directory to PATH
+prepend-path PATH $MCNP_BIN
+
+# Set environment variables
+setenv DATAPATH $MCNP_DATA
+setenv ISCDATA $ISCDATA
+
+# Define doc command
+set-alias doc "thunar $MCNP_ROOT/MCNP_DOCS/"

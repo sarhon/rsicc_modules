@@ -1,0 +1,48 @@
+#%Module1.0
+##
+## SCALE 6.3.2 Modulefile
+##
+
+proc ModulesHelp { } {
+    puts stderr "This module sets up the environment for SCALE 6.3.2."
+    puts stderr "Ensure SCALE_ROOT_632 is set in ~/.rsicc_roots.conf."
+}
+
+module-whatis "Sets up environment for SCALE 6.3.2"
+
+# Load user's configuration file
+set config_file "~/.rsicc_roots.conf"
+set config_file_expanded [file normalize $config_file]
+
+if { [file exists $config_file_expanded] } {
+    source $config_file_expanded
+} else {
+    puts stderr "Configuration file $config_file not found. Please create it with your SCALE_ROOT roots."
+    break
+}
+
+# Get SCALE_ROOT for this version
+if { [info exists SCALE_ROOT_632] } {
+    set SCALE_ROOT [file normalize $SCALE_ROOT_632]
+} else {
+    puts stderr "SCALE_ROOT_632 is not set in $config_file. Please set it to the SCALE 6.3.2 installation directory."
+    break
+}
+
+# Check if SCALE_ROOT exists
+if { ! [file isdirectory $SCALE_ROOT] } {
+    puts stderr "Error: SCALE_ROOT ($SCALE_ROOT) does not exist."
+    break
+}
+
+# Set paths based on SCALE_ROOT
+set SCALE_BIN "$SCALE_ROOT/bin"
+
+# Prepend SCALE_BIN to PATH
+prepend-path PATH $SCALE_BIN
+
+# Set environment variables
+setenv SCALE_BIN $SCALE_BIN
+
+# Define doc command
+set-alias doc "brave-browser https://scale-manual.ornl.gov/index.html"
